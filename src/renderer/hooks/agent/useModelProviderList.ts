@@ -70,13 +70,10 @@ export const useModelProviderList = (): ModelProviderListResult => {
     return list.filter((p) => getAvailableModels(p).length > 0);
   }, [getAvailableModels, modelConfig]);
 
-  const formatModelLabel = useCallback(
-    (provider: { platform?: string } | undefined, modelName?: string) => {
-      if (!modelName) return '';
-      return modelName;
-    },
-    []
-  );
+  const formatModelLabel = useCallback((provider: { platform?: string } | undefined, modelName?: string) => {
+    if (!modelName) return '';
+    return modelName;
+  }, []);
 
   return { providers, geminiModeLookup, getAvailableModels, formatModelLabel };
 };

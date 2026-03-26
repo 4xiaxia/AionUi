@@ -153,10 +153,7 @@ export const useGuidSend = (deps: GuidSendDeps): GuidSendResult => {
             defaultFiles: files,
             workspace: finalWorkspace,
             customWorkspace: isCustomWorkspace,
-            webSearchEngine:
-              placeholderModel.platform === 'gemini-vertex-ai'
-                ? 'google'
-                : 'default',
+            webSearchEngine: placeholderModel.platform === 'gemini-vertex-ai' ? 'google' : 'default',
             presetRules: isPreset ? presetRules : undefined,
             enabledSkills: isPreset ? enabledSkills : undefined,
             presetAssistantId: presetAssistantIdToPass,

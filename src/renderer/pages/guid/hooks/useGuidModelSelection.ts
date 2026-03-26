@@ -69,13 +69,10 @@ export const useGuidModelSelection = (): GuidModelSelectionResult => {
     return lookup;
   }, [geminiModeOptions]);
 
-  const formatGeminiModelLabel = useCallback(
-    (provider: { platform?: string } | undefined, modelName?: string) => {
-      if (!modelName) return '';
-      return modelName;
-    },
-    []
-  );
+  const formatGeminiModelLabel = useCallback((provider: { platform?: string } | undefined, modelName?: string) => {
+    if (!modelName) return '';
+    return modelName;
+  }, []);
 
   const [currentModel, _setCurrentModel] = useState<TProviderWithModel>();
   const selectedModelKeyRef = useRef<string | null>(null);

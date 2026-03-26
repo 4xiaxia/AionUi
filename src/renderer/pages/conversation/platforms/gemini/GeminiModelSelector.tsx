@@ -124,8 +124,6 @@ const GeminiModelSelector: React.FC<{
             return (
               <Menu.ItemGroup title={provider.name} key={provider.id}>
                 {models.map((modelName) => {
-                  const option = undefined;
-
                   // Normal mode: show single item
                   return (
                     <Menu.Item

@@ -31,8 +31,7 @@ export const resolveFallbackTarget = (params: ResolveFallbackParams): { provider
   const { currentModel, providers, geminiModeLookup, getAvailableModels, exhaustedModels } = params;
 
   if (!currentModel) return null;
-  const provider =
-    providers.find((item) => item.id === currentModel.id);
+  const provider = providers.find((item) => item.id === currentModel.id);
   if (!provider) return null;
 
   const availableModels = getAvailableModels(provider);

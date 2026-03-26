@@ -121,8 +121,6 @@ const GuidModelSelector: React.FC<GuidModelSelectorProps> = ({
                     return (
                       <Menu.ItemGroup title={provider.name} key={provider.id}>
                         {availableModels.map((modelName) => {
-                          const option = undefined;
-
                           // 获取模型健康状态
                           const matchedProvider = modelConfig?.find((p) => p.id === provider.id);
                           const healthStatus = matchedProvider?.modelHealth?.[modelName]?.status || 'unknown';
