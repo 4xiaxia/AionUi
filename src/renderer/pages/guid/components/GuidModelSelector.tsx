@@ -55,10 +55,6 @@ const GuidModelSelector: React.FC<GuidModelSelectorProps> = ({
 
   const geminiSelectedLabel = React.useMemo(() => {
     if (!currentModel?.useModel) return '';
-    const isGoogleProvider = currentModel.platform?.toLowerCase().includes('gemini-with-google-auth');
-    if (isGoogleProvider) {
-      return geminiModeLookup.get(currentModel.useModel)?.label || currentModel.useModel;
-    }
     return currentModel.useModel;
   }, [currentModel?.platform, currentModel?.useModel, geminiModeLookup]);
 
@@ -125,8 +121,7 @@ const GuidModelSelector: React.FC<GuidModelSelectorProps> = ({
                     return (
                       <Menu.ItemGroup title={provider.name} key={provider.id}>
                         {availableModels.map((modelName) => {
-                          const isGoogleProvider = provider.platform?.toLowerCase().includes('gemini-with-google-auth');
-                          const option = isGoogleProvider ? geminiModeLookup.get(modelName) : undefined;
+                          const option = undefined;
 
                           // 获取模型健康状态
                           const matchedProvider = modelConfig?.find((p) => p.id === provider.id);
@@ -137,41 +132,6 @@ const GuidModelSelector: React.FC<GuidModelSelectorProps> = ({
                               : healthStatus === 'unhealthy'
                                 ? 'bg-red-500'
                                 : 'bg-gray-400';
-
-                          // Manual mode: show submenu with specific models
-                          if (option?.subModels && option.subModels.length > 0) {
-                            return (
-                              <Menu.SubMenu
-                                key={provider.id + modelName}
-                                title={
-                                  <div className='flex items-center gap-8px w-full'>
-                                    {healthStatus !== 'unknown' && (
-                                      <div className={`w-6px h-6px rounded-full shrink-0 ${healthColor}`} />
-                                    )}
-                                    <span>{option.label}</span>
-                                  </div>
-                                }
-                              >
-                                {option.subModels.map((subModel: { label: string; value: string }) => (
-                                  <Menu.Item
-                                    key={provider.id + subModel.value}
-                                    className={
-                                      currentModel?.id + currentModel?.useModel === provider.id + subModel.value
-                                        ? '!bg-2'
-                                        : ''
-                                    }
-                                    onClick={() => {
-                                      setCurrentModel({ ...provider, useModel: subModel.value }).catch((error) => {
-                                        console.error('Failed to set current model:', error);
-                                      });
-                                    }}
-                                  >
-                                    {subModel.label}
-                                  </Menu.Item>
-                                ))}
-                              </Menu.SubMenu>
-                            );
-                          }
 
                           // Normal mode: show single item
                           return (
@@ -187,36 +147,13 @@ const GuidModelSelector: React.FC<GuidModelSelectorProps> = ({
                               }}
                             >
                               {(() => {
-                                if (!option) {
-                                  return (
-                                    <div className='flex items-center gap-8px w-full'>
-                                      {healthStatus !== 'unknown' && (
-                                        <div className={`w-6px h-6px rounded-full shrink-0 ${healthColor}`} />
-                                      )}
-                                      <span>{modelName}</span>
-                                    </div>
-                                  );
-                                }
                                 return (
-                                  <Tooltip
-                                    position='right'
-                                    trigger='hover'
-                                    content={
-                                      <div className='max-w-240px space-y-6px'>
-                                        <div className='text-12px text-t-secondary leading-5'>{option.description}</div>
-                                        {option.modelHint && (
-                                          <div className='text-11px text-t-tertiary'>{option.modelHint}</div>
-                                        )}
-                                      </div>
-                                    }
-                                  >
-                                    <div className='flex items-center gap-8px w-full'>
-                                      {healthStatus !== 'unknown' && (
-                                        <div className={`w-6px h-6px rounded-full shrink-0 ${healthColor}`} />
-                                      )}
-                                      <span>{option.label}</span>
-                                    </div>
-                                  </Tooltip>
+                                  <div className='flex items-center gap-8px w-full'>
+                                    {healthStatus !== 'unknown' && (
+                                      <div className={`w-6px h-6px rounded-full shrink-0 ${healthColor}`} />
+                                    )}
+                                    <span>{modelName}</span>
+                                  </div>
                                 );
                               })()}
                             </Menu.Item>

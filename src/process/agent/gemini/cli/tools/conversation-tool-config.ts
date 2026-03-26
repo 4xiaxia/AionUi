@@ -74,8 +74,8 @@ export class ConversationToolConfig {
       if (hasGoogleAuth) {
         return {
           id: uuid(),
-          name: 'Gemini Google Auth',
-          platform: 'gemini-with-google-auth',
+          name: 'Gemini Vertex AI',
+          platform: 'gemini-vertex-ai',
           baseUrl: '',
           apiKey: '',
           useModel: 'gemini-2.5-flash',

@@ -58,23 +58,10 @@ export const useGuidModelSelection = (): GuidModelSelectionResult => {
   const modelList = useMemo(() => {
     let allProviders: IProvider[] = [];
 
-    if (isGoogleAuth) {
-      const geminiProvider: IProvider = {
-        id: uuid(),
-        name: 'Gemini Google Auth',
-        platform: 'gemini-with-google-auth',
-        baseUrl: '',
-        apiKey: '',
-        model: geminiModelValues,
-        capabilities: [{ type: 'text' }, { type: 'vision' }, { type: 'function_calling' }],
-      };
-      allProviders = [geminiProvider, ...(modelConfig || [])];
-    } else {
-      allProviders = modelConfig || [];
-    }
+    allProviders = modelConfig || [];
 
     return allProviders.filter(hasAvailableModels);
-  }, [geminiModelValues, isGoogleAuth, modelConfig]);
+  }, [modelConfig]);
 
   const geminiModeLookup = useMemo(() => {
     const lookup = new Map<string, (typeof geminiModeOptions)[number]>();
@@ -85,13 +72,9 @@ export const useGuidModelSelection = (): GuidModelSelectionResult => {
   const formatGeminiModelLabel = useCallback(
     (provider: { platform?: string } | undefined, modelName?: string) => {
       if (!modelName) return '';
-      const isGoogleProvider = provider?.platform?.toLowerCase().includes('gemini-with-google-auth');
-      if (isGoogleProvider) {
-        return geminiModeLookup.get(modelName)?.label || modelName;
-      }
       return modelName;
     },
-    [geminiModeLookup]
+    []
   );
 
   const [currentModel, _setCurrentModel] = useState<TProviderWithModel>();

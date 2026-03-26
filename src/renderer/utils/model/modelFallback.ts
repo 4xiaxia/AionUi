@@ -32,14 +32,10 @@ export const resolveFallbackTarget = (params: ResolveFallbackParams): { provider
 
   if (!currentModel) return null;
   const provider =
-    providers.find((item) => item.id === currentModel.id) ||
-    providers.find((item) => item.platform?.toLowerCase().includes('gemini-with-google-auth'));
+    providers.find((item) => item.id === currentModel.id);
   if (!provider) return null;
 
-  const isGoogleAuthProvider = provider.platform?.toLowerCase().includes('gemini-with-google-auth');
-  const manualOption = isGoogleAuthProvider ? geminiModeLookup.get('manual') : undefined;
-  const manualModels = manualOption?.subModels?.map((model) => model.value) || [];
-  const availableModels = isGoogleAuthProvider ? manualModels : getAvailableModels(provider);
+  const availableModels = getAvailableModels(provider);
   const candidates = availableModels.filter(
     (model) => model && model !== currentModel.useModel && !exhaustedModels.has(model) && model !== 'manual'
   );

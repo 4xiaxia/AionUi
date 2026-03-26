@@ -66,33 +66,16 @@ export const useModelProviderList = (): ModelProviderListResult => {
     // 过滤掉被禁用的 provider（默认为启用）
     list = list.filter((p) => p.enabled !== false);
 
-    if (isGoogleAuth) {
-      const googleProvider: IProvider = {
-        id: GOOGLE_AUTH_PROVIDER_ID,
-        name: 'Gemini Google Auth',
-        platform: 'gemini-with-google-auth',
-        baseUrl: '',
-        apiKey: '',
-        model: geminiModeOptions.map((v) => v.value),
-        capabilities: [{ type: 'text' }, { type: 'vision' }, { type: 'function_calling' }],
-        enabled: true, // Google Auth provider 始终启用
-      } as unknown as IProvider;
-      list = [googleProvider, ...list];
-    }
     // 过滤掉没有可用模型的 provider
     return list.filter((p) => getAvailableModels(p).length > 0);
-  }, [geminiModeOptions, getAvailableModels, isGoogleAuth, modelConfig]);
+  }, [getAvailableModels, modelConfig]);
 
   const formatModelLabel = useCallback(
     (provider: { platform?: string } | undefined, modelName?: string) => {
       if (!modelName) return '';
-      const isGoogleAuthProvider = provider?.platform?.toLowerCase().includes('gemini-with-google-auth');
-      if (isGoogleAuthProvider) {
-        return geminiModeLookup.get(modelName)?.label || modelName;
-      }
       return modelName;
     },
-    [geminiModeLookup]
+    []
   );
 
   return { providers, geminiModeLookup, getAvailableModels, formatModelLabel };

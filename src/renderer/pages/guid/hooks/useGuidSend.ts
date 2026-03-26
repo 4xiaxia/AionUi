@@ -138,7 +138,7 @@ export const useGuidSend = (deps: GuidSendDeps): GuidSendResult => {
         id: 'gemini-placeholder',
         name: 'Gemini',
         useModel: 'default',
-        platform: 'gemini-with-google-auth' as const,
+        platform: 'gemini-vertex-ai' as const,
         baseUrl: '',
         apiKey: '',
       };
@@ -154,7 +154,6 @@ export const useGuidSend = (deps: GuidSendDeps): GuidSendResult => {
             workspace: finalWorkspace,
             customWorkspace: isCustomWorkspace,
             webSearchEngine:
-              placeholderModel.platform === 'gemini-with-google-auth' ||
               placeholderModel.platform === 'gemini-vertex-ai'
                 ? 'google'
                 : 'default',

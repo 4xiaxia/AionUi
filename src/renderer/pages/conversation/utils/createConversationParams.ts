@@ -114,7 +114,7 @@ export async function buildCliAgentParams(
           id: 'gemini-placeholder',
           name: 'Gemini',
           useModel: 'default',
-          platform: 'gemini-with-google-auth' as TProviderWithModel['platform'],
+          platform: 'gemini-vertex-ai' as TProviderWithModel['platform'],
           baseUrl: '',
           apiKey: '',
         }
